@@ -1,0 +1,26 @@
+{
+    "name": "ddl-code",
+    "displayName": "DDL-code",
+    "description": "OpenDDL syntax highlighting for Visual Studio Code.",
+    "version": "1.0.0",
+    "license": "MIT",
+    "engines": {
+        "vscode": "^1.67.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "ddl",
+            "aliases": ["OpenDDL", "ddl"],
+            "extensions": [".ddl",".gex"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "ddl",
+            "scopeName": "source.ddl",
+            "path": "./syntaxes/ddl.tmLanguage.json"
+        }]
+    }
+}

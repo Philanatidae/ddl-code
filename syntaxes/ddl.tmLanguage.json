@@ -1,0 +1,211 @@
+{
+    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+    "name": "OpenDDL",
+    "patterns": [
+        {
+            "include": "#comments"
+        },
+        {
+            "include": "#name"
+        },
+        {
+            "include": "#data-type-values"
+        },
+        {
+            "include": "#data-type-names"
+        },
+        {
+            "include": "#identifier"
+        }
+    ],
+    "repository": {
+        "identifier": {
+            "patterns": [
+                { "include": "#identifier-language" },
+                { "include": "#identifier-user" }
+            ]
+        },
+        "identifier-language": {
+            "match": "\\b[a-z][0-9]*\\b",
+            "name": "storage.type.ddl"
+        },
+        "identifier-user": {
+            "match": "((?:[A-Z]|[a-z]|_)(?:[A-Z]|[a-z]|_|[0-9])*)\\b",
+            "name": "entity.name.type.ddl"
+        },
+        "name": {
+            "match": "((?:\\$|\\%)(?:[A-Z]|[a-z]|_)(?:[A-Z]|[a-z]|_|[0-9])*)\\b",
+            "name": "variable.name.ddl"
+        },
+
+        "data-type-values": {
+            "patterns": [
+                { "include": "#data-type-values-bool" },
+                { "include": "#data-type-values-decimal-literal" },
+                { "include": "#data-type-values-hex-literal" },
+                { "include": "#data-type-values-octal-literal" },
+                { "include": "#data-type-values-binary-literal" },
+                { "include": "#data-type-values-character-literal" },
+                { "include": "#data-type-values-float-literal" },
+                { "include": "#data-type-values-string" }
+            ]
+        },
+        "data-type-values-bool": {
+            "match": "\\b(?:false|true)\\b",
+            "name": "constant.language.ddl"
+        },
+        "data-type-values-decimal-literal": {
+            "match": "(?:-|\\+)?\\b[0-9](?:_?[0-9]+)*\\b",
+            "name": "constant.numeric.ddl"
+        },
+        "data-type-values-hex-literal": {
+            "match": "(?:-|\\+)?\\b0(?:x|X)(?:[0-9]|[A-F]|[a-f])(?:_?(?:[0-9]|[A-F]|[a-f])+)*\\b",
+            "name": "constant.numeric.ddl"
+        },
+        "data-type-values-octal-literal": {
+            "match": "(?:-|\\+)?\\b0(?:o|O)(?:[0-7])(?:_?(?:[0-7])+)*\\b",
+            "name": "constant.numeric.ddl"
+        },
+        "data-type-values-binary-literal": {
+            "match": "(?:-|\\+)?\\b0(?:b|B)(?:0|1)(?:_?(?:0|1)+)*\\b",
+            "name": "constant.numeric.ddl"
+        },
+        "data-type-values-character-literal": {
+            "match": "(?:-|\\+)?'(?:[\\u0020-\\u0026\\u0028-\\u005B\\u005D-\\u007E]|(\\\\(?:[\"'\\?\\\\abfnrtv]|(?:x[A-Za-z0-9][A-Za-z0-9]))))+'",
+            "captures": {
+                "1": { "name": "constant.character.escape.ddl" }
+            },
+            "name": "constant.character.ddl"
+        },
+        "data-type-values-float-literal": {
+            "match": "[\\+-]?(?:(?:[0-9](?:_?[0-9])*(?:\\.(?:[0-9](?:_?[0-9])*)?)?)|(?:\\.[0-9](?:_?[0-9])*))(?:[Ee](?:[\\+-])?[0-9](?:_?[0-9])*)?",
+            "name": "constant.numeric.ddl"
+        },
+        "data-type-values-string": {
+            "begin": "\"",
+            "end": "\"",
+            "name": "string.quoted.double.ddl",
+            "patterns": [
+                { "include": "#data-type-values-string-escape" }
+            ]
+        },
+        "data-type-values-string-escape": {
+            "match": "\\\\(?:[\"'\\?\\\\abfnrtv]|(?:x[A-Za-z0-9][A-Za-z0-9])|(?:u[A-Za-z0-9][A-Za-z0-9][A-Za-z0-9][A-Za-z0-9])|(?:U[A-Za-z0-9][A-Za-z0-9][A-Za-z0-9][A-Za-z0-9][A-Za-z0-9][A-Za-z0-9]))",
+            "name": "constant.character.escape.ddl"
+        },
+        "data-type-values-base64": {
+            "begin": "[A-Za-z0-9\\+/][A-Za-z0-9\\+/][A-Za-z0-9\\+/][A-Za-z0-9\\+/]",
+            "end": "}|,",
+            "beginCaptures": {
+                "0": {
+                    "name": "constant.other.ddl"
+                }
+            }
+        },
+
+        "data-type-names": {
+            "patterns": [
+                { "include": "#data-type-names-bool" },
+
+                { "include": "#data-type-names-int8" },
+                { "include": "#data-type-names-int16" },
+                { "include": "#data-type-names-int32" },
+                { "include": "#data-type-names-int64" },
+
+                { "include": "#data-type-names-uint8" },
+                { "include": "#data-type-names-uint16" },
+                { "include": "#data-type-names-uint32" },
+                { "include": "#data-type-names-uint64" },
+
+                { "include": "#data-type-names-half" },
+                { "include": "#data-type-names-float" },
+                { "include": "#data-type-names-double" },
+
+                { "include": "#data-type-names-string" },
+                { "include": "#data-type-names-ref" },
+                { "include": "#data-type-names-type" },
+                { "include": "#data-type-names-base64" }
+
+            ]
+        },
+        "data-type-names-bool": {
+            "match": "\\bb(?:ool)?\\b",
+            "name": "storage.type.ddl"
+        },
+        "data-type-names-int8": {
+            "match": "\\bi(?:nt)?8\\b",
+            "name": "storage.type.ddl"
+        },
+        "data-type-names-int16": {
+            "match": "\\bi(?:nt)?16\\b",
+            "name": "storage.type.ddl"
+        },
+        "data-type-names-int32": {
+            "match": "\\bi(?:nt)?32\\b",
+            "name": "storage.type.ddl"
+        },
+        "data-type-names-int64": {
+            "match": "\\bi(?:nt)?64\\b",
+            "name": "storage.type.ddl"
+        },
+        "data-type-names-uint8": {
+            "match": "\\bu(?:int)?8\\b",
+            "name": "storage.type.ddl"
+        },
+        "data-type-names-uint16": {
+            "match": "\\bu(?:int)?16\\b",
+            "name": "storage.type.ddl"
+        },
+        "data-type-names-uint32": {
+            "match": "\\bu(?:int)?32\\b",
+            "name": "storage.type.ddl"
+        },
+        "data-type-names-uint64": {
+            "match": "\\bu(?:int)?64\\b",
+            "name": "storage.type.ddl"
+        },
+        "data-type-names-half": {
+            "match": "(?:\\bh(?:alf)?\\b)|(?:\\bf(?:loat)?16\\b)",
+            "name": "storage.type.ddl"
+        },
+        "data-type-names-float": {
+            "match": "(?:\\bf(?:loat)?\\b)|(?:\\bf(?:loat)?32\\b)",
+            "name": "storage.type.ddl"
+        },
+        "data-type-names-double": {
+            "match": "(?:\\bd(?:ouble)?\\b)|(?:\\bf(?:loat)?64\\b)",
+            "name": "storage.type.ddl"
+        },
+        "data-type-names-string": {
+            "match": "\\bs(?:tring)?\\b",
+            "name": "storage.type.ddl"
+        },
+        "data-type-names-ref": {
+            "match": "\\br(?:ef)?\\b",
+            "name": "storage.type.ddl"
+        },
+        "data-type-names-type": {
+            "match": "\\bt(?:ype)?\\b",
+            "name": "storage.type.ddl"
+        },
+        "data-type-names-base64": {
+            "match": "(?:\\bbase64\\b)|(?:\\bz\\b)",
+            "name": "storage.type.ddl"
+        },
+
+        "comments": {
+            "patterns": [
+                {
+                    "begin": "/\\*",
+                    "end": "\\*/",
+                    "name": "comment.block.ddl"
+                },
+                {
+                    "match": "(\/\/).*\\n?",
+                    "name": "comment.line.double-slash.ddl"
+                }
+            ]
+        }
+    },
+    "scopeName": "source.ddl"
+}
