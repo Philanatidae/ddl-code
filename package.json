@@ -2,6 +2,7 @@
     "name": "ddl-code",
     "displayName": "DDL-code",
     "description": "OpenDDL syntax highlighting for Visual Studio Code.",
+    "repository": "https://github.com/Philanatidae/ddl-code",
     "version": "1.0.0",
     "license": "MIT",
     "engines": {
