@@ -5,6 +5,7 @@
     "repository": "https://github.com/Philanatidae/ddl-code",
     "version": "1.0.0",
     "license": "MIT",
+    "publisher": "Philanatidae",
     "engines": {
         "vscode": "^1.67.0"
     },
